@@ -1,0 +1,1710 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
+  <title>❤️ Ayuda a Personas con VIH</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="https://i.ibb.co/WNCFd1XK/file-00000000fa94720e8f74bdde6db216cb.png" />
+  <link rel="shortcut icon" type="image/png" href="https://i.ibb.co/WNCFd1XK/file-00000000fa94720e8f74bdde6db216cb.png" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11">
+  </script>
+  <style>
+    /* ====== RESET Y BASE ====== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Quicksand', sans-serif;
+      background: #0b0e14;
+      color: #e8e8e8;
+      min-height: 100vh;
+      padding: 20px;
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    /* ====== LOADER OVERLAY ====== */
+    #loaderOverlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(11, 14, 20, 0.92);
+      backdrop-filter: blur(12px);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      flex-direction: column;
+      gap: 24px;
+    }
+    #loaderOverlay.active {
+      display: flex;
+    }
+    .loader-spinner {
+      width: 64px;
+      height: 64px;
+      border: 5px solid rgba(255, 107, 107, 0.15);
+      border-top-color: #ff6b6b;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+    .loader-logo {
+      width: 90px;
+      height: auto;
+      border-radius: 24px;
+      animation: pulseLogoLoader 1.8s ease-in-out infinite;
+      filter: drop-shadow(0 0 12px rgba(255, 107, 107, 0.3));
+    }
+    @keyframes pulseLogoLoader {
+      0%,
+      100% {
+        transform: scale(1);
+        opacity: 0.9;
+      }
+      50% {
+        transform: scale(1.08);
+        opacity: 1;
+      }
+    }
+    .loader-text {
+      font-size: 1.3rem;
+      color: #ff6b6b;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      animation: pulseText 1.2s ease-in-out infinite;
+    }
+    @keyframes pulseText {
+      0%,
+      100% {
+        opacity: 1;
+      }
+      50% {
+        opacity: 0.4;
+      }
+    }
+
+    /* ====== FONDO CON CORAZONES ====== */
+    .hearts-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .heart {
+      position: absolute;
+      font-size: 3rem;
+      opacity: 0.06;
+      animation: floatHeart 20s infinite alternate ease-in-out;
+    }
+    @keyframes floatHeart {
+      0% {
+        transform: translate3d(0, 0, 0) rotate(0deg) scale(0.8);
+        opacity: 0.04;
+      }
+      25% {
+        transform: translate3d(30px, -40px, 20px) rotate(15deg) scale(1.1);
+        opacity: 0.10;
+      }
+      50% {
+        transform: translate3d(-20px, -80px, -10px) rotate(-10deg) scale(0.9);
+        opacity: 0.06;
+      }
+      75% {
+        transform: translate3d(40px, 20px, 30px) rotate(20deg) scale(1.2);
+        opacity: 0.12;
+      }
+      100% {
+        transform: translate3d(-30px, -50px, -20px) rotate(-15deg) scale(1);
+        opacity: 0.05;
+      }
+    }
+
+    /* ====== CONTENEDOR PRINCIPAL ====== */
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 860px;
+      margin: 0 auto;
+      background: rgba(255, 255, 255, 0.04);
+      backdrop-filter: blur(12px);
+      border-radius: 40px;
+      padding: 28px 24px 24px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7);
+      transition: all 0.3s ease;
+    }
+
+    /* ====== LOGO PRINCIPAL ====== */
+    .logo-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 8px;
+      position: relative;
+    }
+    .logo-principal {
+      width: 220px;
+      max-width: 80%;
+      height: auto;
+      border-radius: 28px;
+      animation: logoEntrada 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) forwards,
+        logoFlotar 4s ease-in-out infinite;
+      filter: drop-shadow(0 8px 24px rgba(255, 107, 107, 0.25));
+      transition: all 0.3s ease;
+    }
+    .logo-principal:hover {
+      filter: drop-shadow(0 12px 32px rgba(255, 107, 107, 0.45));
+      transform: translateY(-3px);
+    }
+    @keyframes logoEntrada {
+      0% {
+        opacity: 0;
+        transform: scale(0.7) rotate(-2deg);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+      }
+    }
+    @keyframes logoFlotar {
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-6px);
+      }
+    }
+    .logo-brillo {
+      position: absolute;
+      width: 120px;
+      height: 120px;
+      background: radial-gradient(circle, rgba(255, 107, 107, 0.12) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+      animation: brilloPulso 3s ease-in-out infinite;
+    }
+    @keyframes brilloPulso {
+      0%,
+      100% {
+        opacity: 0.3;
+        transform: scale(0.9);
+      }
+      50% {
+        opacity: 0.7;
+        transform: scale(1.2);
+      }
+    }
+
+    .sub {
+      color: #aaa;
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 0.95rem;
+      font-weight: 400;
+    }
+
+    /* ====== MENÚ HAMBURGUESA ====== */
+    .menu-toggle {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: #fff;
+      font-size: 1.8rem;
+      padding: 6px 14px 8px;
+      border-radius: 30px;
+      cursor: pointer;
+      line-height: 1;
+      transition: all 0.25s ease;
+      z-index: 10;
+      backdrop-filter: blur(4px);
+    }
+    .menu-toggle:hover {
+      background: rgba(255, 255, 255, 0.12);
+      transform: scale(1.05);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    }
+
+    /* ====== MENÚ OVERLAY ====== */
+    .menu-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.78);
+      backdrop-filter: blur(10px);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+      animation: fadeInOverlay 0.3s ease-out;
+    }
+    .menu-overlay.active {
+      display: flex;
+    }
+    @keyframes fadeInOverlay {
+      0% {
+        opacity: 0;
+        transform: scale(0.96);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+    .menu-panel {
+      background: linear-gradient(145deg, #1a1f2a, #252b3a);
+      padding: 40px 30px 30px;
+      border-radius: 44px;
+      max-width: 420px;
+      width: 92%;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      box-shadow: 0 40px 100px rgba(0, 0, 0, 0.9);
+      animation: slideMenu 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    @keyframes slideMenu {
+      0% {
+        opacity: 0;
+        transform: translateY(50px) scale(0.92);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+    .menu-panel .menu-logo {
+      width: 70px;
+      height: auto;
+      border-radius: 16px;
+      margin-right: 8px;
+      vertical-align: middle;
+      filter: drop-shadow(0 2px 8px rgba(255, 107, 107, 0.2));
+    }
+    .menu-panel h2 {
+      color: #ff6b6b;
+      font-size: 2rem;
+      margin-bottom: 28px;
+      border-bottom: 2px solid rgba(255, 107, 107, 0.12);
+      padding-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .menu-panel h2 span {
+      font-size: 2.2rem;
+    }
+    .menu-panel ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .menu-panel li {
+      padding: 16px 18px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      font-weight: 600;
+      color: #ddd;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      border-radius: 14px;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-size: 1.05rem;
+    }
+    .menu-panel li:hover {
+      background: rgba(255, 107, 107, 0.06);
+      color: #ff6b6b;
+      padding-left: 28px;
+      transform: translateX(4px);
+      box-shadow: 0 2px 12px rgba(255, 107, 107, 0.04);
+    }
+    .menu-panel li .icon {
+      font-size: 1.7rem;
+      line-height: 1;
+      width: 40px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .menu-panel li .arrow {
+      opacity: 0.3;
+      font-size: 1.2rem;
+      transition: 0.2s;
+      margin-left: auto;
+    }
+    .menu-panel li:hover .arrow {
+      opacity: 1;
+      transform: translateX(4px);
+    }
+    .menu-panel .close-menu {
+      margin-top: 30px;
+      background: linear-gradient(135deg, #e74c3c, #c0392b);
+      border: none;
+      color: #fff;
+      padding: 16px;
+      border-radius: 60px;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      width: 100%;
+      font-family: 'Quicksand', sans-serif;
+      transition: 0.25s ease;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    .menu-panel .close-menu:hover {
+      transform: scale(1.03);
+      box-shadow: 0 4px 24px rgba(231, 76, 60, 0.35);
+    }
+
+    /* ====== FORMULARIO DE AUTENTICACIÓN ====== */
+    .auth-tabs {
+      display: flex;
+      gap: 0;
+      margin-bottom: 24px;
+      border-radius: 40px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      background: rgba(255, 255, 255, 0.03);
+    }
+    .auth-tab {
+      flex: 1;
+      padding: 14px 10px;
+      text-align: center;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      background: transparent;
+      border: none;
+      color: #888;
+      font-family: 'Quicksand', sans-serif;
+      letter-spacing: 0.5px;
+    }
+    .auth-tab.active {
+      background: rgba(255, 107, 107, 0.12);
+      color: #ff6b6b;
+      box-shadow: inset 0 -3px 0 #ff6b6b;
+    }
+    .auth-tab:hover:not(.active) {
+      background: rgba(255, 255, 255, 0.05);
+      color: #ccc;
+    }
+
+    #authForm {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+    #authForm .form-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #ff6b6b;
+      text-align: center;
+      margin-bottom: 4px;
+    }
+
+    input.lowercase-input {
+      text-transform: lowercase;
+    }
+
+    input[type="text"],
+    input[type="email"] {
+      width: 100%;
+      padding: 16px 20px;
+      border-radius: 40px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.04);
+      color: #fff;
+      font-size: 1rem;
+      font-family: 'Quicksand', sans-serif;
+      outline: none;
+      transition: all 0.25s ease;
+    }
+    input:focus {
+      border-color: #ff6b6b;
+      background: rgba(255, 255, 255, 0.07);
+      box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.1);
+    }
+
+    .btn-auth-action {
+      width: 100%;
+      padding: 16px;
+      border-radius: 40px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      border: none;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      font-family: 'Quicksand', sans-serif;
+    }
+    .btn-auth-action:hover {
+      transform: scale(1.02);
+    }
+    .btn-auth-action:active {
+      transform: scale(0.98);
+    }
+    .btn-auth-action.register {
+      background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+      color: #fff;
+      box-shadow: 0 4px 16px rgba(255, 107, 107, 0.25);
+    }
+    .btn-auth-action.login {
+      background: linear-gradient(135deg, #6dd5ed, #2193b0);
+      color: #fff;
+      box-shadow: 0 4px 16px rgba(33, 147, 176, 0.25);
+    }
+
+    .btn-compartir-login {
+      width: 100%;
+      padding: 16px 20px;
+      border-radius: 40px;
+      border: none;
+      font-family: 'Quicksand', sans-serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      cursor: pointer;
+      background: linear-gradient(135deg, #ff6b6b, #c44dff, #6b5ce7);
+      background-size: 200% 200%;
+      animation: gradientShift 4s ease infinite;
+      color: #fff;
+      letter-spacing: 0.5px;
+      box-shadow: 0 6px 24px rgba(196, 77, 255, 0.35);
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin: 16px 0 14px;
+    }
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .status {
+      font-size: 0.95rem;
+      color: #bbb;
+      margin-top: 14px;
+      text-align: center;
+    }
+    .hidden {
+      display: none !important;
+    }
+
+    /* ====== BARRA DE SALDO ====== */
+    .saldo-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 10px 16px;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 60px;
+      padding: 10px 20px;
+      margin: 18px 0 24px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(4px);
+    }
+    .saldo-label {
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255, 107, 107, 0.08);
+      padding: 4px 18px 4px 10px;
+      border-radius: 40px;
+      border: 1px solid rgba(255, 107, 107, 0.15);
+    }
+    .corazon-icon {
+      font-size: 2rem;
+      line-height: 1;
+    }
+    .saldo-label .num {
+      font-weight: 700;
+      font-size: 1.8rem;
+      color: #ff6b6b;
+      margin-left: 4px;
+    }
+    .saldo-extra {
+      font-size: 0.75rem;
+      color: #999;
+      margin-left: 8px;
+      font-weight: 400;
+    }
+
+    .btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+    .btn-comprar {
+      background: linear-gradient(135deg, #2ecc71, #27ae60);
+      color: #fff;
+      border: none;
+      padding: 8px 20px;
+      border-radius: 40px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: 'Quicksand', sans-serif;
+      font-size: 0.9rem;
+      transition: all 0.25s ease;
+      box-shadow: 0 2px 12px rgba(46, 204, 113, 0.3);
+    }
+    .btn-nequi-copy {
+      background: #5B2D8E;
+      color: #fff;
+      border: none;
+      padding: 8px 16px 8px 12px;
+      border-radius: 40px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: 'Quicksand', sans-serif;
+      font-size: 0.9rem;
+      transition: all 0.25s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 2px 12px rgba(91, 45, 142, 0.35);
+    }
+    .nequi-logo-css {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      background: white;
+      border-radius: 50%;
+      font-weight: 900;
+      font-size: 17px;
+      color: #5B2D8E;
+      animation: pulseLogo 1.5s infinite ease-in-out;
+      flex-shrink: 0;
+    }
+    @keyframes pulseLogo {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.15); }
+    }
+    .btn-nequi-copy .nequi-info {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      line-height: 1.2;
+    }
+    .btn-nequi-copy .label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: #c4a7e8;
+      letter-spacing: 0.5px;
+    }
+    .btn-nequi-copy .subtitulo-nequi {
+      font-size: 0.6rem;
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.7);
+      letter-spacing: 0.5px;
+    }
+    .btn-nequi-copy .num {
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      color: #fff;
+    }
+    .btn-refresh {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: #ccc;
+      padding: 8px 18px;
+      border-radius: 40px;
+      cursor: pointer;
+      font-family: 'Quicksand', sans-serif;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: all 0.2s ease;
+    }
+    .btn-logout {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      color: #ccc;
+      padding: 8px 18px;
+      border-radius: 40px;
+      cursor: pointer;
+      font-family: 'Quicksand', sans-serif;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: all 0.2s ease;
+    }
+
+    /* ====== CATEGORÍAS ====== */
+    .categoria-selector {
+      display: flex;
+      gap: 12px;
+      margin: 16px 0 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .categoria-btn {
+      background: rgba(255, 255, 255, 0.04);
+      border: 2px solid transparent;
+      padding: 10px 28px;
+      border-radius: 40px;
+      font-family: 'Quicksand', sans-serif;
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: #aaa;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+    .categoria-btn.active {
+      background: rgba(255, 107, 107, 0.10);
+      border-color: #ff6b6b;
+      color: #ff6b6b;
+      box-shadow: 0 0 20px rgba(255, 107, 107, 0.05);
+    }
+
+    /* ====== PERSONAS GRID ====== */
+    .personas-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+      gap: 18px;
+      margin-top: 8px;
+    }
+    .persona-card {
+      background: rgba(255, 255, 255, 0.03);
+      padding: 14px 12px 16px;
+      border-radius: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      cursor: default;
+      backdrop-filter: blur(4px);
+    }
+    .persona-card:hover {
+      background: rgba(255, 255, 255, 0.06);
+      transform: translateY(-6px) scale(1.02);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+      border-color: rgba(255, 107, 107, 0.15);
+    }
+    .persona-card .avatar {
+      width: 100%;
+      aspect-ratio: 1/1;
+      object-fit: cover;
+      border-radius: 50%;
+      background: #1a1f2a;
+      margin-bottom: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+    .persona-info .nombre {
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: #f0f0f0;
+    }
+    .persona-info .edad {
+      font-size: 0.7rem;
+      color: #999;
+      margin-top: 2px;
+    }
+    .persona-info .creditos {
+      font-size: 0.9rem;
+      color: #ff6b6b;
+      margin: 6px 0 4px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: rgba(255, 107, 107, 0.06);
+      padding: 2px 14px 2px 8px;
+      border-radius: 40px;
+      border: 1px solid rgba(255, 107, 107, 0.10);
+    }
+    .persona-info .desc {
+      font-size: 0.65rem;
+      color: #aaa;
+      margin: 4px 0 6px;
+      line-height: 1.4;
+      max-height: 3.2em;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      font-style: italic;
+    }
+
+    /* ====== BARRA DE PROGRESO ====== */
+    .progress-container {
+      width: 100%;
+      margin-top: 6px;
+      margin-bottom: 4px;
+    }
+    .progress-bar-bg {
+      width: 100%;
+      height: 8px;
+      background: rgba(255, 255, 255, 0.06);
+      border-radius: 20px;
+      overflow: hidden;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      border-radius: 20px;
+      background: linear-gradient(90deg, #ff6b6b, #ee5a24);
+      transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+      width: 0%;
+    }
+    .progress-bar-fill.complete {
+      background: linear-gradient(90deg, #2ecc71, #27ae60);
+    }
+    .progress-label {
+      font-size: 0.65rem;
+      color: #888;
+      margin-top: 2px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .btn-donar {
+      background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+      color: #fff;
+      border: none;
+      padding: 6px 18px;
+      border-radius: 30px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: 'Quicksand', sans-serif;
+      font-size: 0.85rem;
+      width: auto;
+      margin-top: 6px;
+      transition: all 0.25s ease;
+      box-shadow: 0 2px 12px rgba(255, 107, 107, 0.2);
+    }
+
+    /* ====== MODAL IMAGEN ====== */
+    .modal-img {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.92);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      cursor: pointer;
+      backdrop-filter: blur(8px);
+    }
+    .modal-img.active {
+      display: flex;
+    }
+    .modal-img img {
+      max-width: 92%;
+      max-height: 92%;
+      border-radius: 24px;
+      box-shadow: 0 40px 120px rgba(0, 0, 0, 0.9);
+    }
+
+    /* ====== DONACIONES ====== */
+    .donaciones-section {
+      margin-top: 32px;
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 24px;
+      padding: 18px 16px 12px;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+    }
+    .donaciones-section h3 {
+      color: #ff6b6b;
+      font-size: 1.1rem;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .donaciones-scroll {
+      max-height: 160px;
+      overflow-y: auto;
+      padding-right: 6px;
+    }
+    .donacion-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 4px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+      font-size: 0.9rem;
+      color: #ccc;
+    }
+
+    /* ====== ESTADÍSTICAS ====== */
+    .stats-section {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-top: 18px;
+      justify-content: center;
+    }
+    .stat-card {
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 20px;
+      padding: 12px 20px;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      text-align: center;
+      flex: 1;
+      min-width: 100px;
+    }
+    .stat-card .stat-number {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #ff6b6b;
+    }
+    .stat-card .stat-label {
+      font-size: 0.75rem;
+      color: #999;
+      margin-top: 2px;
+    }
+
+    .diagnostico {
+      font-size: 0.9rem;
+      padding: 12px 16px;
+      border-radius: 16px;
+      margin-top: 14px;
+      display: none;
+    }
+    .diagnostico.error {
+      background: rgba(231, 76, 60, 0.12);
+      border: 1px solid rgba(231, 76, 60, 0.2);
+      color: #e74c3c;
+      display: block;
+    }
+    .diagnostico.success {
+      background: rgba(46, 204, 113, 0.10);
+      border: 1px solid rgba(46, 204, 113, 0.15);
+      color: #2ecc71;
+      display: block;
+    }
+
+    .footer {
+      margin-top: 28px;
+      font-size: 0.75rem;
+      color: #666;
+      text-align: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.04);
+      padding-top: 18px;
+    }
+
+    /* ====== BOTÓN WHATSAPP ====== */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      z-index: 100;
+      width: 64px;
+      height: 64px;
+      background: #25D366;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 24px rgba(37, 211, 102, 0.4);
+      transition: all 0.3s ease;
+      cursor: pointer;
+      animation: pulse 1.8s infinite;
+      text-decoration: none;
+    }
+    .whatsapp-float svg {
+      width: 38px;
+      height: 38px;
+      fill: #fff;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.08); }
+    }
+
+    /* ====== TOAST ====== */
+    .toast-container {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 99999;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-width: 380px;
+      width: 100%;
+      pointer-events: none;
+    }
+    .toast {
+      background: rgba(26, 31, 42, 0.95);
+      backdrop-filter: blur(12px);
+      border-radius: 16px;
+      padding: 14px 20px;
+      border-left: 5px solid #ff6b6b;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+      color: #fff;
+      font-size: 0.95rem;
+      animation: slideInRight 0.5s forwards;
+      pointer-events: auto;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    @keyframes slideInRight {
+      0% { opacity: 0; transform: translateX(60px); }
+      100% { opacity: 1; transform: translateX(0); }
+    }
+
+    /* ====== RESPONSIVE ====== */
+    @media (max-width: 600px) {
+      body { padding: 12px; }
+      .container { padding: 18px 14px; border-radius: 28px; }
+      .logo-principal { width: 160px; }
+      .personas-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; }
+      .saldo-bar { flex-direction: column; align-items: stretch; gap: 10px; }
+      .whatsapp-float { width: 54px; height: 54px; bottom: 18px; right: 18px; }
+      .whatsapp-float svg { width: 32px; height: 32px; }
+    }
+    @media (max-width: 400px) {
+      .personas-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ====== LOADER ====== -->
+  <div id="loaderOverlay">
+    <img src="https://i.ibb.co/WNCFd1XK/file-00000000fa94720e8f74bdde6db216cb.png" alt="Logo" class="loader-logo" loading="eager" />
+    <div class="loader-spinner"></div>
+    <div class="loader-text">❤️ Cargando...</div>
+  </div>
+
+  <!-- ====== FONDO DE CORAZONES ====== -->
+  <div class="hearts-bg" id="heartsBg"></div>
+
+  <!-- ====== CONTENEDOR PRINCIPAL ====== -->
+  <div class="container">
+    <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú">☰</button>
+
+    <div class="logo-container">
+      <div class="logo-brillo"></div>
+      <img src="https://i.ibb.co/WNCFd1XK/file-00000000fa94720e8f74bdde6db216cb.png" alt="Ayuda contra el VIH" class="logo-principal" loading="eager" />
+    </div>
+    <p class="sub">1 corazón = $1.000 COP</p>
+
+    <div id="authSection">
+      <div class="auth-tabs">
+        <button class="auth-tab active" id="tabRegister" data-mode="register">📝 Registrarse</button>
+        <button class="auth-tab" id="tabLogin" data-mode="login">🔑 Iniciar sesión</button>
+      </div>
+
+      <form id="authForm" novalidate>
+        <div class="form-title" id="formTitle">📝 Crear cuenta</div>
+        <input type="text" id="authNombre" class="lowercase-input" placeholder="Tu nombre *" required autocomplete="name" />
+        <input type="email" id="authEmail" class="lowercase-input" placeholder="Correo electrónico *" required autocomplete="email" />
+        <button class="btn-auth-action register" id="btnAuthAction" type="button">📝 Registrarse</button>
+      </form>
+
+      <button class="btn-compartir-login" id="btnCompartirLogin">
+        <span>📢</span>
+        <span>¡Comparte esta causa! 💛</span>
+      </button>
+
+      <div class="status" id="authStatus">🔒 Ingresa tu nombre y correo</div>
+      <div id="diagnostico" class="diagnostico"></div>
+    </div>
+
+    <div id="mainSection" class="hidden">
+      <div class="saldo-bar">
+        <div class="saldo-label">
+          <span class="corazon-icon">❤️</span>
+          <span class="num" id="saldoUsuario">0</span>
+          <span class="saldo-extra">tus corazones para donar</span>
+        </div>
+        <div class="btn-group">
+          <button class="btn-comprar" id="btnComprar">➕ Comprar</button>
+          <button class="btn-nequi-copy" id="btnNequiCopy">
+            <span class="nequi-logo-css">N</span>
+            <span class="nequi-info">
+              <span class="label">Cuenta de pago</span>
+              <span class="subtitulo-nequi">Nequi Colombia</span>
+            </span>
+            <span class="num">3019235483</span>
+            <span>📋</span>
+          </button>
+          <button class="btn-refresh" id="btnRefresh">🔄 Actualizar</button>
+          <button class="btn-logout" id="btnLogout">Cerrar</button>
+        </div>
+      </div>
+
+      <div class="categoria-selector">
+        <button class="categoria-btn active" data-categoria="tratamiento" id="catTratamiento">💊 Tratamiento</button>
+        <button class="categoria-btn" data-categoria="alimentos" id="catAlimentos">🥗 Alimentos</button>
+        <button class="categoria-btn" data-categoria="vivienda" id="catVivienda">🏠 Vivienda</button>
+        <button class="categoria-btn" data-categoria="todos" id="catTodos">❤️ Todos</button>
+      </div>
+
+      <div class="personas-grid" id="personasGrid"></div>
+
+      <div class="stats-section" id="statsSection">
+        <div class="stat-card">
+          <div class="stat-number" id="totalDonaciones">0</div>
+          <div class="stat-label">❤️ Donaciones totales</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" id="totalCorazones">0</div>
+          <div class="stat-label">❤️ Corazones donados</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" id="topDonador">—</div>
+          <div class="stat-label">🏆 Donador destacado</div>
+        </div>
+      </div>
+
+      <div class="donaciones-section">
+        <h3>❤️ Donaciones recientes <span id="donacionesCount"></span></h3>
+        <div class="donaciones-scroll" id="donacionesScroll"></div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div>❤️ 100% a tratamientos, alimentos y vivienda para personas con VIH</div>
+    </div>
+  </div>
+
+  <div class="toast-container" id="toastContainer"></div>
+
+  <a href="https://api.whatsapp.com/send?phone=573138596350&text=Hola%2C%20quiero%20ayudar%20a%20personas%20con%20VIH." target="_blank" class="whatsapp-float">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </a>
+
+  <!-- ====== MENÚ OVERLAY ====== -->
+  <div class="menu-overlay" id="menuOverlay">
+    <div class="menu-panel">
+      <h2><span>❤️</span> VIH Ayuda</h2>
+      <ul>
+        <li onclick="mostrarInfo('🔐 Política de privacidad', 'Tus datos solo se usan para gestionar donaciones. No compartimos tu información con terceros.')"><span class="icon">🔐</span> Privacidad <span class="arrow">›</span></li>
+        <li onclick="mostrarInfo('📋 Términos', 'Al donar aceptas que los fondos se usen exclusivamente para ayudar a personas con VIH.')"><span class="icon">📋</span> Términos <span class="arrow">›</span></li>
+        <li onclick="mostrarInfo('📞 Contacto', '📧 ayuda-vih@mbox.re<br>📱 WhatsApp: 3138596350')"><span class="icon">📞</span> Contacto <span class="arrow">›</span></li>
+        <li onclick="mostrarInfo('🌟 Misión', 'Cada corazón donado se traduce en medicamentos, alimentos y apoyo para personas que viven con VIH.')"><span class="icon">🌟</span> Misión <span class="arrow">›</span></li>
+      </ul>
+      <button class="close-menu" id="closeMenu">✕ Cerrar</button>
+    </div>
+  </div>
+
+  <!-- ====== MODAL IMAGEN ====== -->
+  <div class="modal-img" id="modalImg" onclick="this.classList.remove('active')">
+    <img id="modalImgSrc" src="" alt="Ampliar imagen" />
+  </div>
+
+  <script>
+    // ================================================================
+    //  FUNCIONES DE UI
+    // ================================================================
+    function mostrarInfo(titulo, contenido) {
+      Swal.fire({
+        title: titulo, html: contenido, icon: 'info',
+        confirmButtonColor: '#ff6b6b', confirmButtonText: '❤️ Entendido',
+        background: '#1a1f2a', color: '#fff'
+      });
+    }
+
+    const loader = document.getElementById('loaderOverlay');
+    function mostrarLoader() { loader.classList.add('active'); }
+    function ocultarLoader() { loader.classList.remove('active'); }
+
+    const toastContainer = document.getElementById('toastContainer');
+    function mostrarNotificacion(mensaje, icono = '❤️') {
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.innerHTML = `<span>${icono}</span><span>${mensaje}</span><button onclick="this.parentElement.remove()">✕</button>`;
+      toastContainer.appendChild(toast);
+      setTimeout(() => { if (toast.parentElement) toast.remove(); }, 5000);
+    }
+
+    function compartirNativo() {
+      const url = window.location.href;
+      if (navigator.share) {
+        navigator.share({ title: '❤️ Ayuda contra el VIH', text: 'Ayuda a personas que viven con VIH. Cada corazón cuenta.', url })
+          .catch(() => {});
+      } else {
+        navigator.clipboard.writeText(url).then(() => {
+          Swal.fire({ icon: 'success', title: '📋 ¡Enlace copiado!', timer: 2000, showConfirmButton: false, background: '#1a1f2a', color: '#fff' });
+        }).catch(() => {});
+      }
+    }
+
+    // ================================================================
+    //  CONFIGURACIÓN
+    // ================================================================
+    const API_URL = 'https://script.google.com/macros/s/AKfycbw0mllQB719_yc5OMFfns87bm88NG_VEGoLqKXjrQfekXDya-3UvaSDHJ8HgxsytH4Rdg/exec';
+    const NEQUI_NUM = "3019235483";
+    const WHATSAPP_NUM = "3138596350";
+    const META_DONACION = 500;
+
+    // ================================================================
+    //  DATOS DE PERSONAS
+    // ================================================================
+    const PERSONAS = [
+      { id: 'persona-0', nombre: 'Carlos', edad: '34 años', categoria: 'tratamiento', historia: 'Diagnosticado hace 3 años, necesita antirretrovirales mensuales. Trabaja como vendedor ambulante pero sus ingresos no alcanzan para los medicamentos.', meta: META_DONACION },
+      { id: 'persona-1', nombre: 'María', edad: '28 años', categoria: 'alimentos', historia: 'Madre soltera con VIH, necesita alimentación balanceada para que su tratamiento sea efectivo. Vive con sus dos hijos pequeños.', meta: META_DONACION },
+      { id: 'persona-2', nombre: 'Pedro', edad: '45 años', categoria: 'vivienda', historia: 'Perdió su empleo por discriminación tras revelar su diagnóstico. Necesita apoyo para pagar arriendo mientras consigue un nuevo trabajo.', meta: META_DONACION },
+      { id: 'persona-3', nombre: 'Ana', edad: '52 años', categoria: 'tratamiento', historia: 'Vive con VIH desde hace 15 años. Su tratamiento es costoso y su pensión no alcanza. También ayuda a otras personas con la misma condición.', meta: META_DONACION },
+      { id: 'persona-4', nombre: 'Luis', edad: '19 años', categoria: 'alimentos', historia: 'Estudiante universitario diagnosticado recientemente. Sus padres lo rechazaron y necesita apoyo para alimentación mientras estudia.', meta: META_DONACION },
+      { id: 'persona-5', nombre: 'Sofía', edad: '38 años', categoria: 'tratamiento', historia: 'Embarazada y con VIH, necesita tratamiento para evitar la transmisión a su bebé. El tratamiento prenatal es urgente.', meta: META_DONACION },
+      { id: 'persona-6', nombre: 'Diego', edad: '41 años', categoria: 'vivienda', historia: 'Vive en una habitación alquilada. Su condición de salud le impide trabajar tiempo completo. Necesita estabilidad para seguir su tratamiento.', meta: META_DONACION },
+      { id: 'persona-7', nombre: 'Elena', edad: '60 años', categoria: 'alimentos', historia: 'Adulto mayor con VIH y diabetes. Requiere dieta especial que no puede costear. Vive sola y necesita apoyo urgente.', meta: META_DONACION },
+      { id: 'persona-8', nombre: 'Javier', edad: '25 años', categoria: 'tratamiento', historia: 'Perdió cobertura médica al quedarse sin empleo. Necesita sus antirretrovirales para mantenerse saludable mientras busca trabajo.', meta: META_DONACION },
+      { id: 'persona-9', nombre: 'Lucía', edad: '33 años', categoria: 'alimentos', historia: 'Trabaja en una cafetería pero su salario no alcanza para alimentos nutritivos que su sistema inmune necesita con urgencia.', meta: META_DONACION },
+      { id: 'persona-10', nombre: 'Roberto', edad: '48 años', categoria: 'vivienda', historia: 'Fue desalojado por discriminación. Necesita un lugar estable donde vivir para poder continuar su tratamiento sin interrupciones.', meta: META_DONACION },
+      { id: 'persona-11', nombre: 'Carmen', edad: '29 años', categoria: 'tratamiento', historia: 'Le diagnosticaron VIH después de una transfusión. Su familia la abandonó y ahora enfrenta sola los gastos médicos.', meta: META_DONACION },
+      { id: 'persona-12', nombre: 'Andrés', edad: '55 años', categoria: 'alimentos', historia: 'Vive en zona rural, el acceso a alimentos nutritivos es limitado. Necesita suplementos para que su tratamiento funcione correctamente.', meta: META_DONACION },
+      { id: 'persona-13', nombre: 'Diana', edad: '22 años', categoria: 'vivienda', historia: 'Estudiante que fue diagnosticada hace un año. Necesita un lugar seguro para vivir mientras completa sus estudios universitarios.', meta: META_DONACION },
+      { id: 'persona-14', nombre: 'Miguel', edad: '36 años', categoria: 'tratamiento', historia: 'Su tratamiento dejó de ser cubierto por su EPS. Necesita apoyo para comprar medicamentos genéricos cada mes.', meta: META_DONACION }
+    ];
+
+    // ================================================================
+    //  GENERAR CORAZONES EN EL FONDO
+    // ================================================================
+    function generarCorazones() {
+      const bg = document.getElementById('heartsBg');
+      const emojis = ['❤️', '💕', '💗', '💖', '💝', '💞', '💟', '❣️', '💌', '🫀'];
+      for (let i = 0; i < 30; i++) {
+        const heart = document.createElement('div');
+        heart.className = 'heart';
+        heart.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+        heart.style.left = Math.random() * 95 + '%';
+        heart.style.top = Math.random() * 95 + '%';
+        heart.style.fontSize = (2 + Math.random() * 4.5) + 'rem';
+        heart.style.opacity = 0.03 + Math.random() * 0.10;
+        heart.style.animationDuration = (15 + Math.random() * 30) + 's';
+        heart.style.animationDelay = (Math.random() * 25) + 's';
+        bg.appendChild(heart);
+      }
+    }
+    generarCorazones();
+
+    // ================================================================
+    //  UI Y ESTADO
+    // ================================================================
+    const authSection = document.getElementById('authSection');
+    const mainSection = document.getElementById('mainSection');
+    const authNombre = document.getElementById('authNombre');
+    const authEmail = document.getElementById('authEmail');
+    const btnAuthAction = document.getElementById('btnAuthAction');
+    const formTitle = document.getElementById('formTitle');
+    const tabRegister = document.getElementById('tabRegister');
+    const tabLogin = document.getElementById('tabLogin');
+    const btnLogout = document.getElementById('btnLogout');
+    const btnComprar = document.getElementById('btnComprar');
+    const btnNequiCopy = document.getElementById('btnNequiCopy');
+    const btnRefresh = document.getElementById('btnRefresh');
+    const btnCompartirLogin = document.getElementById('btnCompartirLogin');
+    const authStatus = document.getElementById('authStatus');
+    const diagnostico = document.getElementById('diagnostico');
+    const saldoUsuario = document.getElementById('saldoUsuario');
+    const personasGrid = document.getElementById('personasGrid');
+    const donacionesScroll = document.getElementById('donacionesScroll');
+    const donacionesCount = document.getElementById('donacionesCount');
+    const totalDonacionesEl = document.getElementById('totalDonaciones');
+    const totalCorazonesEl = document.getElementById('totalCorazones');
+    const topDonadorEl = document.getElementById('topDonador');
+    const modalImg = document.getElementById('modalImg');
+    const modalImgSrc = document.getElementById('modalImgSrc');
+
+    let usuarioActual = '';
+    let nombreActual = '';
+    let saldoActual = 0;
+    let modoActual = 'register';
+
+    let creditosPersonas = JSON.parse(localStorage.getItem('vih_creditos') || '{}');
+    let donacionesCache = JSON.parse(localStorage.getItem('vih_donaciones') || '[]');
+    let categoriaActiva = 'tratamiento';
+    let intervaloFicticio = null;
+
+    function guardarEstadoLocal() {
+      localStorage.setItem('vih_creditos', JSON.stringify(creditosPersonas));
+      localStorage.setItem('vih_donaciones', JSON.stringify(donacionesCache));
+    }
+
+    function mostrarDiagnostico(mensaje, tipo = 'error') {
+      diagnostico.textContent = mensaje;
+      diagnostico.className = 'diagnostico ' + tipo;
+    }
+
+    function ocultarDiagnostico() { diagnostico.className = 'diagnostico'; diagnostico.textContent = ''; }
+    function actualizarSaldoUI() { saldoUsuario.textContent = saldoActual; }
+
+    authNombre.addEventListener('input', function() { this.value = this.value.toLowerCase(); });
+    authEmail.addEventListener('input', function() { this.value = this.value.toLowerCase(); });
+
+    // ================================================================
+    //  COMUNICACIÓN CON LA API
+    // ================================================================
+    async function callApi(params) {
+      const url = new URL(API_URL);
+      Object.keys(params).forEach(k => url.searchParams.append(k, params[k]));
+      const resp = await fetch(url.toString());
+      if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+      const data = await resp.json();
+      if (!data.ok) throw new Error(data.message || 'Error');
+      return data;
+    }
+
+    async function registrarUsuario(email, nombre) {
+      return await callApi({ action: 'registrarUsuario', email, nombre });
+    }
+    
+    async function verificarLogin(email, nombre) {
+      return await callApi({ action: 'verificarLogin', email, nombre });
+    }
+
+    async function getSaldo(email) {
+      const data = await callApi({ action: 'getSaldo', email });
+      return data.saldo;
+    }
+
+    async function getDonacionesGlobales() {
+      const data = await callApi({ action: 'getDonaciones' });
+      return data.donaciones || [];
+    }
+
+    async function getCreditosGlobales() {
+      const data = await callApi({ action: 'getCreditos' });
+      return data.creditos || {};
+    }
+
+    async function realizarDonacion(email, nombre, personaId, nombrePersona, cantidad) {
+      return await callApi({ action: 'addDonacion', email, nombre, animalId: personaId, nombreAnimal: nombrePersona, cantidad });
+    }
+
+    // ================================================================
+    //  AUTENTICACIÓN
+    // ================================================================
+    function normalizarDatos(nombre, email) {
+      return { nombre: nombre.trim().toLowerCase(), email: email.trim().toLowerCase() };
+    }
+
+    function validarCampos(nombre, email) {
+      if (!nombre || !email || !email.includes('@')) {
+        mostrarDiagnostico('❌ Ingresa nombre y correo válido.', 'error');
+        return false;
+      }
+      return true;
+    }
+
+    function cambiarModo(modo) {
+      modoActual = modo;
+      if (modo === 'register') {
+        tabRegister.classList.add('active');
+        tabLogin.classList.remove('active');
+        formTitle.textContent = '📝 Crear cuenta';
+        btnAuthAction.textContent = '📝 Registrarse';
+        btnAuthAction.className = 'btn-auth-action register';
+        authStatus.textContent = '🔒 Ingresa tus datos para registrarte';
+      } else {
+        tabLogin.classList.add('active');
+        tabRegister.classList.remove('active');
+        formTitle.textContent = '🔑 Iniciar sesión';
+        btnAuthAction.textContent = '🔑 Iniciar sesión';
+        btnAuthAction.className = 'btn-auth-action login';
+        authStatus.textContent = '🔒 Ingresa tus credenciales';
+      }
+      ocultarDiagnostico();
+    }
+
+    async function iniciarSesion(email, nombre) {
+      const datos = normalizarDatos(nombre, email);
+      if (!validarCampos(datos.nombre, datos.email)) return;
+      mostrarLoader();
+      try {
+        await verificarLogin(datos.email, datos.nombre);
+        const saldo = await getSaldo(datos.email);
+        
+        let donacionesNube = [];
+        let creditosNube = {};
+        try { donacionesNube = await getDonacionesGlobales(); } catch (e) {}
+        try { creditosNube = await getCreditosGlobales(); } catch (e) {}
+        if (donacionesNube.length > 0) donacionesCache = donacionesNube;
+        if (Object.keys(creditosNube).length > 0) creditosPersonas = creditosNube;
+        
+        usuarioActual = datos.email;
+        nombreActual = datos.nombre;
+        saldoActual = saldo;
+        authSection.classList.add('hidden');
+        mainSection.classList.remove('hidden');
+        actualizarSaldoUI();
+        setCategoria('tratamiento');
+        renderDonaciones();
+        authStatus.textContent = `✅ Conectado como ${datos.nombre}`;
+        authStatus.style.color = '#2ecc71';
+        ocultarDiagnostico();
+        guardarEstadoLocal();
+        iniciarDonadoresFicticios();
+        mostrarNotificacion(`¡Bienvenido de nuevo, ${datos.nombre}! ❤️`, '👋');
+      } catch (error) {
+        mostrarAlertaError(error.message);
+      } finally {
+        ocultarLoader();
+      }
+    }
+
+    async function registrarNuevoUsuario(email, nombre) {
+      const datos = normalizarDatos(nombre, email);
+      if (!validarCampos(datos.nombre, datos.email)) return;
+      mostrarLoader();
+      try {
+        await registrarUsuario(datos.email, datos.nombre);
+        Swal.fire({
+          title: '🎉 ¡Bienvenido/a!',
+          html: `<p>Registro exitoso. Ahora inicia sesión, <strong>${datos.nombre}</strong>.</p>`,
+          icon: 'success',
+          confirmButtonColor: '#ff6b6b',
+          background: '#1a1f2a',
+          color: '#fff',
+          timer: 3000
+        });
+        authNombre.value = '';
+        authEmail.value = '';
+        cambiarModo('login');
+        authEmail.focus();
+        mostrarDiagnostico('✅ Registro exitoso. Inicia sesión.', 'success');
+      } catch (error) {
+        ocultarLoader();
+        const msg = error.message.toLowerCase();
+        
+        if (msg.includes('email') || msg.includes('correo')) {
+          Swal.fire({
+            title: '📧 Correo ya registrado',
+            html: `<p>El correo <strong>${datos.email}</strong> ya está en uso.</p>`,
+            icon: 'warning',
+            confirmButtonColor: '#ff6b6b',
+            background: '#1a1f2a',
+            color: '#fff'
+          });
+        } else if (msg.includes('nombre') && msg.includes('existe')) {
+          const nuevoNombre = await sugerirNombreConNumero(datos.nombre);
+          if (nuevoNombre) {
+            mostrarLoader();
+            try {
+              await registrarUsuario(datos.email, nuevoNombre);
+              Swal.fire({ title: '🎉 ¡Registro exitoso!', html: `<p>Te registraste como <strong>${nuevoNombre}</strong></p>`, icon: 'success', confirmButtonColor: '#ff6b6b', background: '#1a1f2a', color: '#fff', timer: 3000 });
+              authNombre.value = '';
+              authEmail.value = '';
+              cambiarModo('login');
+              mostrarDiagnostico('✅ Registro exitoso. Inicia sesión.', 'success');
+            } catch (err2) {
+              ocultarLoader();
+              mostrarDiagnostico('❌ Error: ' + err2.message, 'error');
+            }
+          }
+        } else {
+          mostrarDiagnostico('❌ Error: ' + error.message, 'error');
+        }
+      } finally {
+        ocultarLoader();
+      }
+    }
+
+    async function sugerirNombreConNumero(nombreBase) {
+      const numero = Math.floor(Math.random() * 90) + 10;
+      const sugerido = `${nombreBase}${numero}`;
+      const result = await Swal.fire({
+        title: '👤 Nombre ya existe',
+        html: `¿Quieres registrarte como <strong>${sugerido}</strong>?`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: `Sí, usar ${sugerido}`,
+        cancelButtonText: 'Cancelar',
+        confirmButtonColor: '#ff6b6b',
+        cancelButtonColor: '#e74c3c',
+        background: '#1a1f2a',
+        color: '#fff'
+      });
+      return result.isConfirmed ? sugerido : null;
+    }
+
+    function mostrarAlertaError(mensaje) {
+      Swal.fire({
+        title: '😅 ¡Ups!',
+        html: `<p>${mensaje}</p>`,
+        icon: 'error',
+        confirmButtonColor: '#ff6b6b',
+        background: '#1a1f2a',
+        color: '#fff'
+      });
+    }
+
+    function logoutUsuario() {
+      if (intervaloFicticio) { clearInterval(intervaloFicticio); intervaloFicticio = null; }
+      usuarioActual = '';
+      nombreActual = '';
+      authSection.classList.remove('hidden');
+      mainSection.classList.add('hidden');
+      authStatus.textContent = '🔒 Ingresa tu nombre y correo';
+      saldoActual = 0;
+      saldoUsuario.textContent = '0';
+      personasGrid.innerHTML = '';
+      ocultarDiagnostico();
+      cambiarModo('register');
+    }
+
+    tabRegister.addEventListener('click', () => cambiarModo('register'));
+    tabLogin.addEventListener('click', () => cambiarModo('login'));
+
+    btnAuthAction.addEventListener('click', () => {
+      const nombre = authNombre.value;
+      const email = authEmail.value;
+      if (modoActual === 'register') {
+        registrarNuevoUsuario(email, nombre);
+      } else {
+        iniciarSesion(email, nombre);
+      }
+    });
+
+    btnLogout.addEventListener('click', logoutUsuario);
+    btnCompartirLogin.addEventListener('click', compartirNativo);
+    cambiarModo('register');
+
+    // ================================================================
+    //  COMPRA Y NEQUI
+    // ================================================================
+    async function comprarCorazones() {
+      if (!usuarioActual) {
+        Swal.fire({ icon: 'warning', title: 'Inicia sesión primero', confirmButtonColor: '#ff6b6b', background: '#1a1f2a', color: '#fff' });
+        return;
+      }
+      const { value: cantidad } = await Swal.fire({
+        title: '❤️ ¿Cuántos corazones quieres?',
+        html: `<p>Cada corazón vale <strong>$1.000 COP</strong></p>`,
+        input: 'number',
+        inputAttributes: { min: 1, step: 1 },
+        showCancelButton: true,
+        confirmButtonText: '✨ Comprar',
+        confirmButtonColor: '#2ecc71',
+        cancelButtonColor: '#e74c3c',
+        background: '#1a1f2a',
+        color: '#fff'
+      });
+      if (!cantidad || parseInt(cantidad) < 1) return;
+      const num = parseInt(cantidad);
+      const total = num * 1000;
+      const mensaje = `Hola, quiero comprar ${num} corazones para ${usuarioActual}. Total $${total.toLocaleString()} COP. Nequi Colombia al ${NEQUI_NUM}.`;
+      
+      const result = await Swal.fire({
+        title: '💳 Pago por Nequi Colombia',
+        html: `<p>Total: <strong>$${total.toLocaleString()} COP</strong></p><p>Nequi: <strong>${NEQUI_NUM}</strong></p>`,
+        showCancelButton: true,
+        confirmButtonText: '📱 Enviar comprobante',
+        confirmButtonColor: '#25D366',
+        background: '#1a1f2a',
+        color: '#fff'
+      });
+      
+      if (result.isConfirmed) {
+        window.open(`https://api.whatsapp.com/send?phone=57${WHATSAPP_NUM}&text=${encodeURIComponent(mensaje)}`, '_blank');
+      }
+    }
+    btnComprar.addEventListener('click', comprarCorazones);
+
+    btnNequiCopy.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(NEQUI_NUM);
+        Swal.fire({ icon: 'success', title: '📋 ¡Número copiado!', html: `<p>Nequi Colombia: <strong>${NEQUI_NUM}</strong></p>`, confirmButtonColor: '#5B2D8E', background: '#1a1f2a', color: '#fff', timer: 2500 });
+      } catch {
+        const ta = document.createElement('textarea');
+        ta.value = NEQUI_NUM;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        Swal.fire({ icon: 'success', title: '📋 ¡Número copiado!', confirmButtonColor: '#5B2D8E', background: '#1a1f2a', color: '#fff', timer: 2500 });
+      }
+    });
+
+    btnRefresh.addEventListener('click', async () => {
+      if (!usuarioActual) return;
+      try {
+        const nuevoSaldo = await getSaldo(usuarioActual);
+        saldoActual = nuevoSaldo;
+        actualizarSaldoUI();
+        Swal.fire({ icon: 'success', title: '✨ ¡Saldo actualizado!', html: `<p>Tienes <strong>${saldoActual}</strong> ❤️</p>`, confirmButtonColor: '#2ecc71', background: '#1a1f2a', color: '#fff', timer: 2500 });
+      } catch (error) {
+        Swal.fire({ icon: 'error', title: 'Error', text: error.message, confirmButtonColor: '#e74c3c', background: '#1a1f2a', color: '#fff' });
+      }
+    });
+
+    // ================================================================
+    //  DONAR CORAZONES
+    // ================================================================
+    async function donarCredito(personaId, personaNombre) {
+      if (!usuarioActual) {
+        Swal.fire({ icon: 'warning', title: 'Inicia sesión primero', confirmButtonColor: '#ff6b6b', background: '#1a1f2a', color: '#fff' });
+        return;
+      }
+      const { value: cantidad } = await Swal.fire({
+        title: `❤️ Donar a ${personaNombre}`,
+        html: `<p>Tienes <strong>${saldoActual}</strong> corazones</p>`,
+        input: 'number',
+        inputAttributes: { min: 1, max: saldoActual, step: 1 },
+        showCancelButton: true,
+        confirmButtonText: '❤️ Donar',
+        confirmButtonColor: '#ff6b6b',
+        cancelButtonColor: '#e74c3c',
+        background: '#1a1f2a',
+        color: '#fff'
+      });
+      if (!cantidad || parseInt(cantidad) < 1) return;
+      const num = parseInt(cantidad);
+      if (num > saldoActual) {
+        Swal.fire({ icon: 'error', title: 'No tienes suficientes corazones', confirmButtonColor: '#e74c3c', background: '#1a1f2a', color: '#fff' });
+        return;
+      }
+      try {
+        const result = await realizarDonacion(usuarioActual, nombreActual, personaId, personaNombre, num);
+        saldoActual = result.saldo;
+        if (!creditosPersonas[personaId]) creditosPersonas[personaId] = 0;
+        creditosPersonas[personaId] += num;
+        actualizarSaldoUI();
+        actualizarPersonas();
+        const ahora = new Date();
+        const fecha = ahora.toLocaleDateString('es-ES', { day: '2-digit', month: 'short', year: 'numeric' });
+        donacionesCache.unshift({ nombre: nombreActual, nombrePersona: personaNombre, cantidad: num, fecha, email: usuarioActual });
+        if (donacionesCache.length > 50) donacionesCache.length = 50;
+        guardarEstadoLocal();
+        renderDonaciones();
+        mostrarNotificacion(`<strong>${nombreActual}</strong> donó ${num} ❤️ a <strong>${personaNombre}</strong>`);
+        Swal.fire({ icon: 'success', title: '🎉 ¡Donación exitosa!', html: `<p>Donaste <strong>${num}</strong> ❤️ a <strong>${personaNombre}</strong></p>`, confirmButtonColor: '#ff6b6b', background: '#1a1f2a', color: '#fff', timer: 3000 });
+      } catch (error) {
+        Swal.fire({ icon: 'error', title: 'Error', text: error.message, confirmButtonColor: '#e74c3c', background: '#1a1f2a', color: '#fff' });
+      }
+    }
+    window.donarCredito = donarCredito;
+
+    // ================================================================
+    //  DONADORES FICTICIOS
+    // ================================================================
+    const NOMBRES_FICTICIOS = ['Jorge Ramírez', 'Claudia Suárez', 'Miguel Torres', 'Patricia Díaz', 'Fernando Gómez'];
+    
+    function generarDonacionFicticia() {
+      const persona = PERSONAS[Math.floor(Math.random() * PERSONAS.length)];
+      const cantidad = Math.floor(Math.random() * 6) + 5;
+      const nombre = NOMBRES_FICTICIOS[Math.floor(Math.random() * NOMBRES_FICTICIOS.length)];
+      const ahora = new Date();
+      const fecha = ahora.toLocaleDateString('es-ES', { day: '2-digit', month: 'short', year: 'numeric' });
+      if (!creditosPersonas[persona.id]) creditosPersonas[persona.id] = 0;
+      creditosPersonas[persona.id] += cantidad;
+      donacionesCache.unshift({ nombre, nombrePersona: persona.nombre, cantidad, fecha, email: 'anonimo@ficticio.com' });
+      if (donacionesCache.length > 50) donacionesCache.length = 50;
+      guardarEstadoLocal();
+      mostrarNotificacion(`<strong>${nombre}</strong> donó ${cantidad} ❤️ a <strong>${persona.nombre}</strong>`, '✨');
+      actualizarPersonas();
+      renderDonaciones();
+    }
+
+    function iniciarDonadoresFicticios() {
+      if (intervaloFicticio) clearInterval(intervaloFicticio);
+      setTimeout(() => generarDonacionFicticia(), 2000);
+      intervaloFicticio = setInterval(generarDonacionFicticia, 57000);
+    }
+
+    // ================================================================
+    //  ESTADÍSTICAS Y RENDERIZADO
+    // ================================================================
+    function actualizarEstadisticas() {
+      const todas = donacionesCache;
+      totalDonacionesEl.textContent = todas.length;
+      totalCorazonesEl.textContent = todas.reduce((sum, d) => sum + (d.cantidad || 0), 0);
+      const donadores = {};
+      todas.forEach(d => { const key = d.nombre || d.email; donadores[key] = (donadores[key] || 0) + (d.cantidad || 0); });
+      let topNombre = '—', topCantidad = 0;
+      for (const [nombre, cantidad] of Object.entries(donadores)) {
+        if (cantidad > topCantidad) { topCantidad = cantidad; topNombre = nombre; }
+      }
+      topDonadorEl.textContent = topCantidad > 0 ? `${topNombre} (${topCantidad}❤️)` : '—';
+      if (donacionesCount) donacionesCount.textContent = `(${todas.length})`;
+    }
+
+    function renderDonaciones() {
+      const mostrar = donacionesCache.slice(0, 50);
+      donacionesScroll.innerHTML = mostrar.map(item => {
+        let fecha = item.fecha || '';
+        return `<div class="donacion-item"><span>❤️ ${item.nombre||item.email} donó ${item.cantidad} ❤️ a ${item.nombrePersona||item.nombreAnimal}</span><span>${fecha}</span></div>`;
+      }).join('');
+      actualizarEstadisticas();
+    }
+
+    function actualizarPersonas() {
+      let filtrados = categoriaActiva === 'todos' ? [...PERSONAS] : PERSONAS.filter(p => p.categoria === categoriaActiva);
+      filtrados.sort((a, b) => a.nombre.localeCompare(b.nombre));
+      personasGrid.innerHTML = '';
+
+      filtrados.forEach(persona => {
+        const creditos = creditosPersonas[persona.id] || 0;
+        const meta = persona.meta || META_DONACION;
+        const porcentaje = Math.min(100, Math.round((creditos / meta) * 100));
+        const isComplete = porcentaje >= 100;
+        const div = document.createElement('div');
+        div.className = 'persona-card';
+        div.innerHTML = `
+          <div class="avatar" style="width:100%;aspect-ratio:1/1;background:linear-gradient(135deg, #ff6b6b33, #ee5a2433);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:3rem;">👤</div>
+          <div class="persona-info">
+            <div class="nombre">${persona.nombre}</div>
+            <div class="edad">${persona.edad}</div>
+            <div class="creditos">❤️ ${creditos}</div>
+            <div class="progress-container">
+              <div class="progress-bar-bg"><div class="progress-bar-fill ${isComplete?'complete':''}" style="width:${porcentaje}%;"></div></div>
+              <div class="progress-label"><span>${porcentaje}%</span><span>${isComplete?'🎉 Meta alcanzada':`${creditos}/${meta}`}</span></div>
+            </div>
+            <div class="desc">${persona.historia}</div>
+            <button class="btn-donar" onclick="window.donarCredito('${persona.id}','${persona.nombre}')">Donar ❤️</button>
+          </div>`;
+        personasGrid.appendChild(div);
+      });
+    }
+
+    function setCategoria(cat) {
+      categoriaActiva = cat;
+      document.querySelectorAll('.categoria-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById('cat' + cat.charAt(0).toUpperCase() + cat.slice(1))?.classList.add('active');
+      actualizarPersonas();
+    }
+    document.getElementById('catTratamiento').addEventListener('click', () => setCategoria('tratamiento'));
+    document.getElementById('catAlimentos').addEventListener('click', () => setCategoria('alimentos'));
+    document.getElementById('catVivienda').addEventListener('click', () => setCategoria('vivienda'));
+    document.getElementById('catTodos').addEventListener('click', () => setCategoria('todos'));
+
+    // ================================================================
+    //  MENÚ
+    // ================================================================
+    const menuToggle = document.getElementById('menuToggle');
+    const menuOverlay = document.getElementById('menuOverlay');
+    document.getElementById('closeMenu').addEventListener('click', () => menuOverlay.classList.remove('active'));
+    menuToggle.addEventListener('click', () => menuOverlay.classList.toggle('active'));
+    menuOverlay.addEventListener('click', (e) => { if (e.target === menuOverlay) menuOverlay.classList.remove('active'); });
+
+    console.log('❤️ Plataforma de ayuda a personas con VIH lista.');
+  </script>
+</body>
+</html>
