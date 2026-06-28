@@ -1164,24 +1164,24 @@
     const META_DONACION = 500;
 
     // ================================================================
-    //  DATOS DE PERSONAS
+    //  DATOS DE PERSONAS (imágenes fijas + edades entre 20 y 30 años)
     // ================================================================
     const PERSONAS = [
-      { id: 'persona-0', nombre: 'Carlos', edad: '34 años', categoria: 'tratamiento', historia: 'Diagnosticado hace 3 años, necesita antirretrovirales mensuales. Trabaja como vendedor ambulante pero sus ingresos no alcanzan para los medicamentos.', meta: META_DONACION },
-      { id: 'persona-1', nombre: 'María', edad: '28 años', categoria: 'alimentos', historia: 'Madre soltera con VIH, necesita alimentación balanceada para que su tratamiento sea efectivo. Vive con sus dos hijos pequeños.', meta: META_DONACION },
-      { id: 'persona-2', nombre: 'Pedro', edad: '45 años', categoria: 'vivienda', historia: 'Perdió su empleo por discriminación tras revelar su diagnóstico. Necesita apoyo para pagar arriendo mientras consigue un nuevo trabajo.', meta: META_DONACION },
-      { id: 'persona-3', nombre: 'Ana', edad: '52 años', categoria: 'tratamiento', historia: 'Vive con VIH desde hace 15 años. Su tratamiento es costoso y su pensión no alcanza. También ayuda a otras personas con la misma condición.', meta: META_DONACION },
-      { id: 'persona-4', nombre: 'Luis', edad: '19 años', categoria: 'alimentos', historia: 'Estudiante universitario diagnosticado recientemente. Sus padres lo rechazaron y necesita apoyo para alimentación mientras estudia.', meta: META_DONACION },
-      { id: 'persona-5', nombre: 'Sofía', edad: '38 años', categoria: 'tratamiento', historia: 'Embarazada y con VIH, necesita tratamiento para evitar la transmisión a su bebé. El tratamiento prenatal es urgente.', meta: META_DONACION },
-      { id: 'persona-6', nombre: 'Diego', edad: '41 años', categoria: 'vivienda', historia: 'Vive en una habitación alquilada. Su condición de salud le impide trabajar tiempo completo. Necesita estabilidad para seguir su tratamiento.', meta: META_DONACION },
-      { id: 'persona-7', nombre: 'Elena', edad: '60 años', categoria: 'alimentos', historia: 'Adulto mayor con VIH y diabetes. Requiere dieta especial que no puede costear. Vive sola y necesita apoyo urgente.', meta: META_DONACION },
-      { id: 'persona-8', nombre: 'Javier', edad: '25 años', categoria: 'tratamiento', historia: 'Perdió cobertura médica al quedarse sin empleo. Necesita sus antirretrovirales para mantenerse saludable mientras busca trabajo.', meta: META_DONACION },
-      { id: 'persona-9', nombre: 'Lucía', edad: '33 años', categoria: 'alimentos', historia: 'Trabaja en una cafetería pero su salario no alcanza para alimentos nutritivos que su sistema inmune necesita con urgencia.', meta: META_DONACION },
-      { id: 'persona-10', nombre: 'Roberto', edad: '48 años', categoria: 'vivienda', historia: 'Fue desalojado por discriminación. Necesita un lugar estable donde vivir para poder continuar su tratamiento sin interrupciones.', meta: META_DONACION },
-      { id: 'persona-11', nombre: 'Carmen', edad: '29 años', categoria: 'tratamiento', historia: 'Le diagnosticaron VIH después de una transfusión. Su familia la abandonó y ahora enfrenta sola los gastos médicos.', meta: META_DONACION },
-      { id: 'persona-12', nombre: 'Andrés', edad: '55 años', categoria: 'alimentos', historia: 'Vive en zona rural, el acceso a alimentos nutritivos es limitado. Necesita suplementos para que su tratamiento funcione correctamente.', meta: META_DONACION },
-      { id: 'persona-13', nombre: 'Diana', edad: '22 años', categoria: 'vivienda', historia: 'Estudiante que fue diagnosticada hace un año. Necesita un lugar seguro para vivir mientras completa sus estudios universitarios.', meta: META_DONACION },
-      { id: 'persona-14', nombre: 'Miguel', edad: '36 años', categoria: 'tratamiento', historia: 'Su tratamiento dejó de ser cubierto por su EPS. Necesita apoyo para comprar medicamentos genéricos cada mes.', meta: META_DONACION }
+      { id: 'persona-0', nombre: 'Carlos',    edad: '27 años', categoria: 'tratamiento', historia: 'Diagnosticado hace 3 años, necesita antirretrovirales mensuales. Trabaja como vendedor ambulante pero sus ingresos no alcanzan para los medicamentos.', meta: META_DONACION, imagen: 'https://i.ibb.co/bg8msjdJ/file-00000000859c71f58eaf21cbcb6f5a06-8.png' },
+      { id: 'persona-1', nombre: 'María',     edad: '25 años', categoria: 'alimentos',   historia: 'Madre soltera con VIH, necesita alimentación balanceada para que su tratamiento sea efectivo. Vive con sus dos hijos pequeños.', meta: META_DONACION, imagen: 'https://i.ibb.co/WNPPxwkV/file-000000002da4720e9b74975754bb59ff-7.png' },
+      { id: 'persona-2', nombre: 'Pedro',     edad: '29 años', categoria: 'vivienda',    historia: 'Perdió su empleo por discriminación tras revelar su diagnóstico. Necesita apoyo para pagar arriendo mientras consigue un nuevo trabajo.', meta: META_DONACION, imagen: 'https://i.ibb.co/9mkMpnxG/file-00000000859c71f58eaf21cbcb6f5a06-7.png' },
+      { id: 'persona-3', nombre: 'Ana',       edad: '23 años', categoria: 'tratamiento', historia: 'Vive con VIH desde hace 15 años. Su tratamiento es costoso y su pensión no alcanza. También ayuda a otras personas con la misma condición.', meta: META_DONACION, imagen: 'https://i.ibb.co/TDjnhGxd/file-000000002da4720e9b74975754bb59ff-6.png' },
+      { id: 'persona-4', nombre: 'Luis',      edad: '21 años', categoria: 'alimentos',   historia: 'Estudiante universitario diagnosticado recientemente. Sus padres lo rechazaron y necesita apoyo para alimentación mientras estudia.', meta: META_DONACION, imagen: 'https://i.ibb.co/VYvLn6rj/file-00000000859c71f58eaf21cbcb6f5a06-6.png' },
+      { id: 'persona-5', nombre: 'Sofía',     edad: '28 años', categoria: 'tratamiento', historia: 'Embarazada y con VIH, necesita tratamiento para evitar la transmisión a su bebé. El tratamiento prenatal es urgente.', meta: META_DONACION, imagen: 'https://i.ibb.co/0VWbR47h/file-000000002da4720e9b74975754bb59ff-5.png' },
+      { id: 'persona-6', nombre: 'Diego',     edad: '26 años', categoria: 'vivienda',    historia: 'Vive en una habitación alquilada. Su condición de salud le impide trabajar tiempo completo. Necesita estabilidad para seguir su tratamiento.', meta: META_DONACION, imagen: 'https://i.ibb.co/S4WJ7GfY/file-00000000859c71f58eaf21cbcb6f5a06-5.png' },
+      { id: 'persona-7', nombre: 'Elena',     edad: '30 años', categoria: 'alimentos',   historia: 'Adulto mayor con VIH y diabetes. Requiere dieta especial que no puede costear. Vive sola y necesita apoyo urgente.', meta: META_DONACION, imagen: 'https://i.ibb.co/TDcpSkdN/file-000000002da4720e9b74975754bb59ff-4.png' },
+      { id: 'persona-8', nombre: 'Javier',    edad: '24 años', categoria: 'tratamiento', historia: 'Perdió cobertura médica al quedarse sin empleo. Necesita sus antirretrovirales para mantenerse saludable mientras busca trabajo.', meta: META_DONACION, imagen: 'https://i.ibb.co/WbV6Y6w/file-00000000859c71f58eaf21cbcb6f5a06-4.png' },
+      { id: 'persona-9', nombre: 'Lucía',     edad: '22 años', categoria: 'alimentos',   historia: 'Trabaja en una cafetería pero su salario no alcanza para alimentos nutritivos que su sistema inmune necesita con urgencia.', meta: META_DONACION, imagen: 'https://i.ibb.co/4ZGRGZB5/file-000000002da4720e9b74975754bb59ff-3.png' },
+      { id: 'persona-10', nombre: 'Roberto',  edad: '28 años', categoria: 'vivienda',    historia: 'Fue desalojado por discriminación. Necesita un lugar estable donde vivir para poder continuar su tratamiento sin interrupciones.', meta: META_DONACION, imagen: 'https://i.ibb.co/ZRR36PB8/file-00000000859c71f58eaf21cbcb6f5a06-3.png' },
+      { id: 'persona-11', nombre: 'Carmen',   edad: '20 años', categoria: 'tratamiento', historia: 'Le diagnosticaron VIH después de una transfusión. Su familia la abandonó y ahora enfrenta sola los gastos médicos.', meta: META_DONACION, imagen: 'https://i.ibb.co/8nM3NNPr/file-000000002da4720e9b74975754bb59ff-2.png' },
+      { id: 'persona-12', nombre: 'Andrés',   edad: '30 años', categoria: 'alimentos',   historia: 'Vive en zona rural, el acceso a alimentos nutritivos es limitado. Necesita suplementos para que su tratamiento funcione correctamente.', meta: META_DONACION, imagen: 'https://i.ibb.co/dw6tfcJR/file-00000000859c71f58eaf21cbcb6f5a06-2.png' },
+      { id: 'persona-13', nombre: 'Diana',    edad: '24 años', categoria: 'vivienda',    historia: 'Estudiante que fue diagnosticada hace un año. Necesita un lugar seguro para vivir mientras completa sus estudios universitarios.', meta: META_DONACION, imagen: 'https://i.ibb.co/ynPwST84/file-000000002da4720e9b74975754bb59ff-1.png' },
+      { id: 'persona-14', nombre: 'Miguel',   edad: '25 años', categoria: 'tratamiento', historia: 'Su tratamiento dejó de ser cubierto por su EPS. Necesita apoyo para comprar medicamentos genéricos cada mes.', meta: META_DONACION, imagen: 'https://i.ibb.co/TBTdQn7C/file-00000000859c71f58eaf21cbcb6f5a06-1.png' }
     ];
 
     // ================================================================
@@ -1376,6 +1376,9 @@
       mostrarLoader();
       try {
         await registrarUsuario(datos.email, datos.nombre);
+        // 💾 Guardar credenciales en localStorage automáticamente
+        localStorage.setItem('vih_credenciales', JSON.stringify({ email: datos.email, nombre: datos.nombre }));
+        
         Swal.fire({
           title: '🎉 ¡Bienvenido/a!',
           html: `<p>Registro exitoso. Ahora inicia sesión, <strong>${datos.nombre}</strong>.</p>`,
@@ -1385,8 +1388,9 @@
           color: '#fff',
           timer: 3000
         });
-        authNombre.value = '';
-        authEmail.value = '';
+        // Rellenar campos y cambiar a modo login automáticamente
+        authNombre.value = datos.nombre;
+        authEmail.value = datos.email;
         cambiarModo('login');
         authEmail.focus();
         mostrarDiagnostico('✅ Registro exitoso. Inicia sesión.', 'success');
@@ -1409,9 +1413,11 @@
             mostrarLoader();
             try {
               await registrarUsuario(datos.email, nuevoNombre);
+              // Guardar credenciales con el nombre alternativo
+              localStorage.setItem('vih_credenciales', JSON.stringify({ email: datos.email, nombre: nuevoNombre }));
               Swal.fire({ title: '🎉 ¡Registro exitoso!', html: `<p>Te registraste como <strong>${nuevoNombre}</strong></p>`, icon: 'success', confirmButtonColor: '#ff6b6b', background: '#1a1f2a', color: '#fff', timer: 3000 });
-              authNombre.value = '';
-              authEmail.value = '';
+              authNombre.value = nuevoNombre;
+              authEmail.value = datos.email;
               cambiarModo('login');
               mostrarDiagnostico('✅ Registro exitoso. Inicia sesión.', 'success');
             } catch (err2) {
@@ -1467,6 +1473,24 @@
       saldoUsuario.textContent = '0';
       personasGrid.innerHTML = '';
       ocultarDiagnostico();
+      // Ya NO borramos las credenciales guardadas, ni limpiamos los campos.
+      // Simplemente nos aseguramos de estar en modo login si hay datos guardados.
+      const guardadas = localStorage.getItem('vih_credenciales');
+      if (guardadas) {
+        try {
+          const cred = JSON.parse(guardadas);
+          if (cred.email && cred.nombre) {
+            authNombre.value = cred.nombre;
+            authEmail.value = cred.email;
+            cambiarModo('login');
+            authStatus.textContent = '👋 Tus datos están listos. Solo presiona "Iniciar sesión"';
+            return;
+          }
+        } catch (e) {}
+      }
+      // Si no hay credenciales guardadas, vamos a registro
+      authNombre.value = '';
+      authEmail.value = '';
       cambiarModo('register');
     }
 
@@ -1486,6 +1510,27 @@
     btnLogout.addEventListener('click', logoutUsuario);
     btnCompartirLogin.addEventListener('click', compartirNativo);
     cambiarModo('register');
+
+    // ================================================================
+    //  CARGA DE CREDENCIALES GUARDADAS AL INICIAR
+    // ================================================================
+    (function precargarCredenciales() {
+      const guardadas = localStorage.getItem('vih_credenciales');
+      if (guardadas) {
+        try {
+          const cred = JSON.parse(guardadas);
+          if (cred.email && cred.nombre) {
+            authNombre.value = cred.nombre;
+            authEmail.value = cred.email;
+            // Cambiar a modo login para que solo presione "Iniciar sesión"
+            cambiarModo('login');
+            authStatus.textContent = '👋 ¡Bienvenido de nuevo! Solo presiona "Iniciar sesión"';
+          }
+        } catch (e) {
+          localStorage.removeItem('vih_credenciales');
+        }
+      }
+    })();
 
     // ================================================================
     //  COMPRA Y NEQUI
@@ -1595,7 +1640,16 @@
         guardarEstadoLocal();
         renderDonaciones();
         mostrarNotificacion(`<strong>${nombreActual}</strong> donó ${num} ❤️ a <strong>${personaNombre}</strong>`);
-        Swal.fire({ icon: 'success', title: '🎉 ¡Donación exitosa!', html: `<p>Donaste <strong>${num}</strong> ❤️ a <strong>${personaNombre}</strong></p>`, confirmButtonColor: '#ff6b6b', background: '#1a1f2a', color: '#fff', timer: 3000 });
+        // ✅ MUESTRA EL SALDO RESTANTE
+        Swal.fire({ 
+          icon: 'success', 
+          title: '🎉 ¡Donación exitosa!', 
+          html: `<p>Donaste <strong>${num}</strong> ❤️ a <strong>${personaNombre}</strong></p><p style="margin-top:8px;">💖 Tu saldo restante: <strong>${saldoActual}</strong> ❤️</p>`, 
+          confirmButtonColor: '#ff6b6b', 
+          background: '#1a1f2a', 
+          color: '#fff', 
+          timer: 4000 
+        });
       } catch (error) {
         Swal.fire({ icon: 'error', title: 'Error', text: error.message, confirmButtonColor: '#e74c3c', background: '#1a1f2a', color: '#fff' });
       }
@@ -1655,6 +1709,12 @@
       actualizarEstadisticas();
     }
 
+    function obtenerSrcImagen(persona) {
+      if (persona.imagen) return persona.imagen;
+      // Fallback por si alguna persona no tuviera imagen (no debería ocurrir ahora)
+      return `https://ui-avatars.com/api/?name=${encodeURIComponent(persona.nombre)}&background=ff6b6b&color=fff&size=200&font-size=0.5&bold=true&format=svg`;
+    }
+
     function actualizarPersonas() {
       let filtrados = categoriaActiva === 'todos' ? [...PERSONAS] : PERSONAS.filter(p => p.categoria === categoriaActiva);
       filtrados.sort((a, b) => a.nombre.localeCompare(b.nombre));
@@ -1665,10 +1725,11 @@
         const meta = persona.meta || META_DONACION;
         const porcentaje = Math.min(100, Math.round((creditos / meta) * 100));
         const isComplete = porcentaje >= 100;
+        const imgSrc = obtenerSrcImagen(persona);
         const div = document.createElement('div');
         div.className = 'persona-card';
         div.innerHTML = `
-          <div class="avatar" style="width:100%;aspect-ratio:1/1;background:linear-gradient(135deg, #ff6b6b33, #ee5a2433);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:3rem;">👤</div>
+          <img src="${imgSrc}" alt="${persona.nombre}" class="avatar" loading="lazy" onerror="this.onerror=null;this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(persona.nombre)}&background=ff6b6b&color=fff&size=200&font-size=0.5&bold=true&format=svg';" />
           <div class="persona-info">
             <div class="nombre">${persona.nombre}</div>
             <div class="edad">${persona.edad}</div>
