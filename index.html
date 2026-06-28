@@ -110,29 +110,30 @@
     .heart {
       position: absolute;
       font-size: 3rem;
-      opacity: 0.06;
+      opacity: 0.08;
       animation: floatHeart 20s infinite alternate ease-in-out;
+      filter: drop-shadow(0 0 6px currentColor);
     }
     @keyframes floatHeart {
       0% {
-        transform: translate3d(0, 0, 0) rotate(0deg) scale(0.8);
+        transform: translate3d(0, 0, 0) rotate(0deg) scale(0.7);
         opacity: 0.04;
       }
       25% {
-        transform: translate3d(30px, -40px, 20px) rotate(15deg) scale(1.1);
-        opacity: 0.10;
-      }
-      50% {
-        transform: translate3d(-20px, -80px, -10px) rotate(-10deg) scale(0.9);
-        opacity: 0.06;
-      }
-      75% {
-        transform: translate3d(40px, 20px, 30px) rotate(20deg) scale(1.2);
+        transform: translate3d(35px, -50px, 20px) rotate(12deg) scale(1.1);
         opacity: 0.12;
       }
+      50% {
+        transform: translate3d(-25px, -85px, -10px) rotate(-8deg) scale(0.85);
+        opacity: 0.07;
+      }
+      75% {
+        transform: translate3d(40px, 15px, 30px) rotate(18deg) scale(1.15);
+        opacity: 0.14;
+      }
       100% {
-        transform: translate3d(-30px, -50px, -20px) rotate(-15deg) scale(1);
-        opacity: 0.05;
+        transform: translate3d(-35px, -55px, -20px) rotate(-12deg) scale(0.95);
+        opacity: 0.06;
       }
     }
 
@@ -914,6 +915,70 @@
       padding-top: 18px;
     }
 
+    /* ====== CONTADOR DE VISITAS ====== */
+    .contador-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 20px 0 10px;
+      position: relative;
+    }
+    .contador-wrapper {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 107, 107, 0.2);
+      border-radius: 60px;
+      padding: 10px 28px;
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 0 30px rgba(255, 107, 107, 0.08);
+      animation: contadorEntrada 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards, contadorBrillo 3s ease-in-out infinite;
+      transition: all 0.3s ease;
+      cursor: default;
+    }
+    .contador-wrapper:hover {
+      box-shadow: 0 0 40px rgba(255, 107, 107, 0.18);
+      border-color: rgba(255, 107, 107, 0.4);
+      transform: translateY(-2px);
+    }
+    @keyframes contadorEntrada {
+      0% { opacity: 0; transform: scale(0.8); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+    @keyframes contadorBrillo {
+      0%, 100% { box-shadow: 0 0 25px rgba(255, 107, 107, 0.06); }
+      50% { box-shadow: 0 0 45px rgba(255, 107, 107, 0.16); }
+    }
+    .contador-icono {
+      font-size: 2rem;
+      animation: latido 1.5s ease-in-out infinite;
+    }
+    @keyframes latido {
+      0%, 100% { transform: scale(1); }
+      15% { transform: scale(1.25); }
+      30% { transform: scale(1); }
+      45% { transform: scale(1.15); }
+      60% { transform: scale(1); }
+    }
+    .contador-texto {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #ffb3b3;
+      letter-spacing: 0.5px;
+    }
+    .contador-img {
+      height: 28px;
+      border-radius: 8px;
+      filter: drop-shadow(0 0 6px rgba(255, 107, 107, 0.3));
+      transition: all 0.3s ease;
+      cursor: default;
+      pointer-events: none;
+    }
+    .contador-wrapper:hover .contador-img {
+      filter: drop-shadow(0 0 12px rgba(255, 107, 107, 0.5));
+    }
+
     /* ====== BOTÓN WHATSAPP ====== */
     .whatsapp-float {
       position: fixed;
@@ -985,6 +1050,10 @@
       .saldo-bar { flex-direction: column; align-items: stretch; gap: 10px; }
       .whatsapp-float { width: 54px; height: 54px; bottom: 18px; right: 18px; }
       .whatsapp-float svg { width: 32px; height: 32px; }
+      .contador-wrapper { padding: 8px 18px; gap: 10px; }
+      .contador-icono { font-size: 1.5rem; }
+      .contador-texto { font-size: 0.75rem; }
+      .contador-img { height: 22px; }
     }
     @media (max-width: 400px) {
       .personas-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
@@ -1088,6 +1157,21 @@
       </div>
     </div>
 
+    <!-- ====== CONTADOR DE VISITAS ====== -->
+    <div class="contador-container">
+      <div class="contador-wrapper">
+        <span class="contador-icono">👁️</span>
+        <span class="contador-texto">Visitas</span>
+        <img 
+          src="https://counter11.optistats.ovh/private/contadorvisitasgratis.php?c=kc6zw2bews7k5uudxa6t6b6znctah1hz" 
+          alt="Contador de visitas" 
+          class="contador-img" 
+          loading="lazy"
+        />
+        <span class="contador-icono" style="animation-delay: 0.3s;">💛</span>
+      </div>
+    </div>
+
     <div class="footer">
       <div>❤️ 100% a tratamientos, alimentos y vivienda para personas con VIH</div>
     </div>
@@ -1185,21 +1269,28 @@
     ];
 
     // ================================================================
-    //  GENERAR CORAZONES EN EL FONDO
+    //  GENERAR CORAZONES EN EL FONDO (COLORES MÁS BONITOS)
     // ================================================================
     function generarCorazones() {
       const bg = document.getElementById('heartsBg');
-      const emojis = ['❤️', '💕', '💗', '💖', '💝', '💞', '💟', '❣️', '💌', '🫀'];
-      for (let i = 0; i < 30; i++) {
+      // Paleta de corazones de colores variados y vibrantes
+      const emojis = [
+        '❤️', '🧡', '💛', '💚', '💙', '💜', '🤍', '💗', '💖', '💝', '💞', '💟', '❣️', '💌', '🫀',
+        '❤️‍🔥', '💕', '💓', '🩷', '🩵', '🤎'
+      ];
+      for (let i = 0; i < 35; i++) {
         const heart = document.createElement('div');
         heart.className = 'heart';
         heart.textContent = emojis[Math.floor(Math.random() * emojis.length)];
         heart.style.left = Math.random() * 95 + '%';
         heart.style.top = Math.random() * 95 + '%';
-        heart.style.fontSize = (2 + Math.random() * 4.5) + 'rem';
-        heart.style.opacity = 0.03 + Math.random() * 0.10;
-        heart.style.animationDuration = (15 + Math.random() * 30) + 's';
-        heart.style.animationDelay = (Math.random() * 25) + 's';
+        heart.style.fontSize = (2 + Math.random() * 5) + 'rem';
+        heart.style.opacity = 0.04 + Math.random() * 0.12;
+        heart.style.animationDuration = (18 + Math.random() * 28) + 's';
+        heart.style.animationDelay = (Math.random() * 20) + 's';
+        // Añadir un tono de color aleatorio mediante filter (opcional)
+        const hueRotate = Math.floor(Math.random() * 360);
+        heart.style.filter = `drop-shadow(0 0 8px currentColor) hue-rotate(${hueRotate}deg)`;
         bg.appendChild(heart);
       }
     }
@@ -1376,7 +1467,6 @@
       mostrarLoader();
       try {
         await registrarUsuario(datos.email, datos.nombre);
-        // 💾 Guardar credenciales en localStorage automáticamente
         localStorage.setItem('vih_credenciales', JSON.stringify({ email: datos.email, nombre: datos.nombre }));
         
         Swal.fire({
@@ -1388,7 +1478,6 @@
           color: '#fff',
           timer: 3000
         });
-        // Rellenar campos y cambiar a modo login automáticamente
         authNombre.value = datos.nombre;
         authEmail.value = datos.email;
         cambiarModo('login');
@@ -1413,7 +1502,6 @@
             mostrarLoader();
             try {
               await registrarUsuario(datos.email, nuevoNombre);
-              // Guardar credenciales con el nombre alternativo
               localStorage.setItem('vih_credenciales', JSON.stringify({ email: datos.email, nombre: nuevoNombre }));
               Swal.fire({ title: '🎉 ¡Registro exitoso!', html: `<p>Te registraste como <strong>${nuevoNombre}</strong></p>`, icon: 'success', confirmButtonColor: '#ff6b6b', background: '#1a1f2a', color: '#fff', timer: 3000 });
               authNombre.value = nuevoNombre;
@@ -1473,8 +1561,7 @@
       saldoUsuario.textContent = '0';
       personasGrid.innerHTML = '';
       ocultarDiagnostico();
-      // Ya NO borramos las credenciales guardadas, ni limpiamos los campos.
-      // Simplemente nos aseguramos de estar en modo login si hay datos guardados.
+      // Mantener credenciales guardadas, no limpiar campos
       const guardadas = localStorage.getItem('vih_credenciales');
       if (guardadas) {
         try {
@@ -1488,7 +1575,6 @@
           }
         } catch (e) {}
       }
-      // Si no hay credenciales guardadas, vamos a registro
       authNombre.value = '';
       authEmail.value = '';
       cambiarModo('register');
@@ -1522,7 +1608,6 @@
           if (cred.email && cred.nombre) {
             authNombre.value = cred.nombre;
             authEmail.value = cred.email;
-            // Cambiar a modo login para que solo presione "Iniciar sesión"
             cambiarModo('login');
             authStatus.textContent = '👋 ¡Bienvenido de nuevo! Solo presiona "Iniciar sesión"';
           }
@@ -1640,7 +1725,6 @@
         guardarEstadoLocal();
         renderDonaciones();
         mostrarNotificacion(`<strong>${nombreActual}</strong> donó ${num} ❤️ a <strong>${personaNombre}</strong>`);
-        // ✅ MUESTRA EL SALDO RESTANTE
         Swal.fire({ 
           icon: 'success', 
           title: '🎉 ¡Donación exitosa!', 
@@ -1711,7 +1795,6 @@
 
     function obtenerSrcImagen(persona) {
       if (persona.imagen) return persona.imagen;
-      // Fallback por si alguna persona no tuviera imagen (no debería ocurrir ahora)
       return `https://ui-avatars.com/api/?name=${encodeURIComponent(persona.nombre)}&background=ff6b6b&color=fff&size=200&font-size=0.5&bold=true&format=svg`;
     }
 
